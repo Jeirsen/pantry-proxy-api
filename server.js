@@ -34,7 +34,7 @@ app.get("/:basketName", async (req, res) => {
         const response = await axios.get(`${PANTRY_BASE_API_URL}/${basketName}`)
         res.json(response.data)
     } catch (error) {
-        res.status(400).json({ error: error.message })
+        res.status(error.response?.status || 500).json({ error: error.response?.data || error.message })
     }
 })
 
@@ -48,8 +48,8 @@ app.post("/:basketName", async (req, res) => {
         })
         res.json(response.data)
     } catch (error) {
-        res.status(400).json({
-            error: error.message
+        res.status(error.response?.status || 500).json({
+            error: error.response?.data || error.message
         })
     }
 })
@@ -64,7 +64,7 @@ app.put("/:basketName", async (req, res) => {
         })
         res.json(response.data)
     } catch (error) {
-        res.status(400).json({ error: error.message })
+        res.status(error.response?.status || 500).json({ error: error.response?.data || error.message })
     }
 })
 
@@ -75,8 +75,8 @@ app.delete("/:basketName", async (req, res) => {
         await axios.delete(`${PANTRY_BASE_API_URL}/${basketName}`)
         res.json({ message: `Basket: ${basketName} cleared successfully.` })
     } catch (error) {
-        res.status(400).json({
-            error: error.message
+        res.status(error.response?.status || 500).json({
+            error: error.response?.data || error.message
         })
     }
 })
